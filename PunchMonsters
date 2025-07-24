@@ -1,0 +1,146 @@
+if game.CoreGui:FindFirstChild("findmeBitch") then 
+    game.CoreGui:FindFirstChild("findmeBitch"):Destroy()
+end
+
+_G.autoTrain = false
+_G.autoWin = false
+_G.autoRebirth = false
+_G.autoSuperRebirth = false
+_G.autoOpen = false
+
+local eggSelected = nil
+local openAmount = 1
+
+local plr = game:GetService("Players").LocalPlayer
+plr.Character.Humanoid.UseJumpPower = true
+
+if plr.PlayerGui:FindFirstChild("Shop") then plr.PlayerGui:FindFirstChild("Shop"):Destroy() end
+
+local z = {
+	"A",
+	"B",
+	"C",
+	"D",
+	"E",
+	"F",
+	"G",
+	"H",
+	"I",
+	"J",
+	"K",
+	"L",
+	"M",
+	"N",
+	"O",
+	"P",
+	"Q",
+	"R",
+	"S",
+	"T"
+}
+
+function at()
+    while _G.autoTrain do
+        local x = plr.stats.Void.Value and "V" or z{plr.stats.Area.Value}
+        game:GetService("ReplicatedStorage").Train:FireServer("0"..x,1) 
+        task.wait()
+    end
+end
+
+function aw()
+    while _G.autoWin do
+        game:GetService("ReplicatedStorage").Win:FireServer(plr.stats.Area.Value)
+        task.wait()
+    end
+end
+
+function ar()
+    while _G.autoRebirth do
+        game:GetService("ReplicatedStorage").Rebirth:FireServer()
+        task.wait()
+    end
+end
+
+function asr()
+	while _G.autoSuperRebirth do
+		game:GetService("ReplicatedStorage").SRebirth:FireServer()
+		task.wait()
+	end
+end
+
+function aoe()
+    while _G.autoOpen do
+        game:GetService("ReplicatedStorage").Egg:FireServer(eggSelected,openAmount)
+        task.wait(1)
+    end
+end
+
+function getEggList()
+    local listofeggs = game:GetService("Players").LocalPlayer.PlayerGui.Eggs
+    local eggList = {}
+
+    for i,v in listofeggs:children() do
+        if not table.find(eggList,v.Name) then
+            table.insert(eggList,v.Name)
+        end
+    end
+
+    table.remove(eggList,table.find(eggList,"Dominus Egg"))
+    table.remove(eggList,table.find(eggList,"Exclusive Egg"))
+    
+    return eggList
+end
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/liamVSC/scripts/refs/heads/main/UI-Library"))()
+
+local Window = Library:Create("Punch Monsters","@liam3566")
+
+local main = Window:Tab("Main",true)
+local automation = Window:Tab("AutoFarms",false)
+local Egg = Window:Tab("Egg",false)
+local settings = Window:Tab("Settings",false)
+
+settings:Keybind("Toggle UI",Enum.KeyCode.RightShift,function()
+Library:Toggle()
+end)
+
+settings:Button("Copy Discord Link", function()
+    setclipboard("discord.gg/8ap8wFnghk")
+end)
+
+main:Label("Destroying shitty simulators by the day")
+
+main:Slider("WalkSpeed",16,250,function(s)
+    plr.Character.Humanoid.WalkSpeed = s
+end)
+
+main:Slider("JumpPower",16,250,function(s)
+    plr.Character.Humanoid.JumpPower = s
+end)
+
+automation:Toggle("Auto Train",function(x)
+    _G.autoTrain = x
+    at()
+end)
+automation:Toggle("Auto Win",function(x)
+    _G.autoWin = x
+    aw()
+end)
+automation:Toggle("Auto Rebirth",function(x)
+    _G.autoRebirth = x
+    ar()
+end)
+automation:Toggle("Auto Super Rebirth",function(x)
+    _G.autoSuperRebirth = x
+    asr()
+end)
+Egg:Textbox("Open amount","1 or 3",function(x)
+    openAmount = x
+end)
+Egg:Toggle("Auto Open",function(x) 
+    _G.autoOpen = x
+    aoe()
+end)
+Egg:Dropdown("Eggs", getEggList(),function(x)
+    eggSelected = x
+end)
