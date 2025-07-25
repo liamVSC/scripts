@@ -1,0 +1,63 @@
+if game.CoreGui:FindFirstChild("findmeBitch") then 
+    game.CoreGui:FindFirstChild("findmeBitch"):Destroy()
+end
+
+_G.autoClick = false
+
+local plr = game:GetService("Players").LocalPlayer
+plr.Character.Humanoid.UseJumpPower = true
+
+function ac()
+    while _G.autoClick do
+        game:GetService("ReplicatedStorage").MangoesEvt:FireServer()
+        task.wait()
+    end
+end
+
+function unlockIslands()
+    local pos = {
+        Vector3.new(165, 2550, -13),
+        Vector3.new(513, 5647, 101),
+        Vector3.new(-196, 9256, 144),
+    }
+
+    for i,v in pos do
+        plr.Character:MoveTo(v)
+        task.wait(1)
+    end
+end
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/liamVSC/scripts/refs/heads/main/UI-Library"))()
+
+local Window = Library:Create("Mango Simulator","@liam3566")
+
+local main = Window:Tab("Main",true)
+local automation = Window:Tab("Autos",false)
+local settings = Window:Tab("Settings",false)
+
+settings:Keybind("Toggle UI",Enum.KeyCode.RightShift,function()
+Library:Toggle()
+end)
+
+settings:Button("Copy Discord Link", function()
+    setclipboard("discord.gg/8ap8wFnghk")
+end)
+
+main:Label("Destroying shitty simulators by the day")
+
+main:Slider("WalkSpeed",16,250,function(s)
+    plr.Character.Humanoid.WalkSpeed = s
+end)
+
+main:Slider("JumpPower",16,250,function(s)
+    plr.Character.Humanoid.JumpPower = s
+end)
+
+main:Button("Unlock Islands",function()
+    unlockIslands()
+end)
+
+automation:Toggle("auto click",function(x)
+    _G.autoClick = x
+    ac()
+end)
