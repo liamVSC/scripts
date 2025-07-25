@@ -116,6 +116,7 @@ function Library:Create(xHubName,xGameName)
     HubName.Text = xHubName
     HubName.TextColor3 = Color3.fromRGB(255, 255, 255)
     HubName.TextSize = 16.000
+    HubName.TextScaled = true
 
     Line.Name = "Line"
     Line.Parent = Sidebar
@@ -156,6 +157,7 @@ function Library:Create(xHubName,xGameName)
     GameName.Text = xGameName
     GameName.TextColor3 = Color3.fromRGB(190, 190, 190)
     GameName.TextSize = 14.000
+    GameName.TextScaled = true
 
     TabHolder.Name = "TabHolder"
     TabHolder.Parent = Main
