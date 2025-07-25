@@ -594,6 +594,7 @@ function Library:Create(xHubName,xGameName)
             TextboxName.TextColor3 = Color3.fromRGB(255, 255, 255)
             TextboxName.TextSize = 16.000
             TextboxName.TextXAlignment = Enum.TextXAlignment.Left
+            TextboxName.TextScaled = true
 
             TextboxNamePadding.Name = "TextboxNamePadding"
             TextboxNamePadding.Parent = TextboxName
@@ -611,6 +612,7 @@ function Library:Create(xHubName,xGameName)
             Textbox.Text = ""
             Textbox.TextColor3 = Color3.fromRGB(255, 255, 255)
             Textbox.TextSize = 14.000
+            Textbox.TextScaled = true
 
             TextboxCorner.Name = "TextboxCorner"
             TextboxCorner.Parent = Textbox
